@@ -1,0 +1,54 @@
+{
+	"manifest_version": 3,
+	"name": "Boss直聘自动回复插件",
+	"version": "1.0",
+	"description": "辅助Boss直聘招聘人员及时回复，提高用户应答效率，引导到私域沉淀。",
+	"author": "niemingxing",
+	"icons":
+	{
+		"16":"icon16.png",
+		"48":"icon48.png",
+		"128":"icon128.png"
+	},
+	"action":
+	{
+		"default_icon": "icon16.png",
+		"default_popup": "popup.html"
+	},
+	"options_page": "options.html",
+	"background":
+	{
+		"service_worker": "js/background.js"
+	},
+	"host_permissions": [
+		"https://zhipin.com/*",
+		"https://www.zhipin.com/*",
+		"https://idnsl.xyz/*"
+	],
+	"content_scripts": 
+	[
+		{
+			"matches": ["https://www.zhipin.com/*","https://zhipin.com/*"],
+			"js": ["js/content-script.js"],
+			"css": [
+				"css/page_layer.css"
+			]
+		}
+	],
+	"web_accessible_resources":
+	[
+		{
+			"resources" : ["css/page_layer.css"],
+			"matches": [
+				"*://www.zhipin.com/*",
+				"*://zhipin.com/*"
+			]
+		}
+	],
+	"permissions": [
+		"storage",
+		"activeTab",
+		"tabs",
+		"scripting"
+	]
+}
