@@ -4,7 +4,7 @@
 
 免费密钥：cx-b6Gs8sjfsbOB6EeZsGhuudswBofqqhd75awjeiav
 
-## 示例图片
+示例图片
 
 ![image](https://github.com/niemingxing/zhipin/assets/7400829/e7e4d622-2fab-4f25-a436-bf6ccc992357)
 
