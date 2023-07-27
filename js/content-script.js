@@ -112,8 +112,19 @@ function startAutoReply()
 	let listItems = document.querySelectorAll("div.chat-container div.chat-user div[role=group] div[role=listitem]");
 	if(listItems.length >0)
 	{
-		console.log(listItems.length);
-		handleAutoReply(0,listItems);
+		let noRelyItems = Array.from(listItems).filter((node) => {
+			let figureElement = node.querySelector("div.figure");
+			let newCountElement = figureElement.querySelector("span.news-count");
+			let newCount = 0;
+			if(newCountElement)
+			{
+				newCount = parseInt(newCountElement.innerText);
+			}
+			return newCount > 0;
+		});
+
+		console.log(noRelyItems.length);
+		handleAutoReply(0,noRelyItems);
 	}
 }
 
