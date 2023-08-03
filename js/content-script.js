@@ -25,22 +25,23 @@ function initToolButton() {
 	popupElement.innerHTML = html;
 	document.body.appendChild(popupElement);
 	document.querySelector("#gpt-sr-toggleButton").addEventListener("click", function() {
-		this.disabled = true;
 		if(this.innerText.includes("开启自动回复"))
 		{
+			this.disabled = true;
 			isAutoReply = true;
 			this.style.backgroundColor = 'red';
 			this.innerText = this.innerText.replace("开启自动回复","关闭自动回复");
+			chrome.runtime.sendMessage({"type":"check_mkey"}, function (response) {
+				console.log(response.farewell)
+			});
 		}
 		else if(this.innerText.includes("关闭自动回复"))
 		{
+			this.disabled = false;
 			isAutoReply = false;
 			this.style.backgroundColor = '#00bebd';
 			this.innerText = this.innerText.replace("关闭自动回复","开启自动回复");
 		}
-		chrome.runtime.sendMessage({"type":"check_mkey"}, function (response) {
-			console.log(response.farewell)
-		});
 	});
 }
 
@@ -110,22 +111,19 @@ function addStylesheet(url) {
 function startAutoReply()
 {
 	let listItems = document.querySelectorAll("div.chat-container div.chat-user div[role=group] div[role=listitem]");
-	if(listItems.length >0)
-	{
-		let noRelyItems = Array.from(listItems).filter((node) => {
-			let figureElement = node.querySelector("div.figure");
-			let newCountElement = figureElement.querySelector("span.news-count");
-			let newCount = 0;
-			if(newCountElement)
-			{
-				newCount = parseInt(newCountElement.innerText);
-			}
-			return newCount > 0;
-		});
+	let noRelyItems = Array.from(listItems).filter((node) => {
+		let figureElement = node.querySelector("div.figure");
+		let newCountElement = figureElement.querySelector("span.news-count");
+		let newCount = 0;
+		if(newCountElement)
+		{
+			newCount = parseInt(newCountElement.innerText);
+		}
+		return newCount > 0;
+	});
 
-		console.log(noRelyItems.length);
-		handleAutoReply(0,noRelyItems);
-	}
+	console.log(noRelyItems.length);
+	handleAutoReply(0,noRelyItems);
 }
 
 function updateAutoReplyCount()
@@ -140,7 +138,9 @@ function handleAutoReply(itemIndex,listItems,cancel = false)
 	if(cancel || !isAutoReply) return;
 	if(itemIndex == listItems.length)
 	{
-		startAutoReply();
+		setTimeout(function (){
+			startAutoReply();
+		},2000);
 		return;
 	}
 	//if(itemIndex == 5) return;
