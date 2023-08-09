@@ -4,9 +4,7 @@
 
 免费密钥：加V获取30天免费密钥
 
-[安装参考](https://www.bilibili.com/video/BV1514y1U7Uw/?vd_source=07bc57c14ff07a0d104533f8de5fb6d3)
-
-示例图片
+示例图片|[安装参考](https://www.bilibili.com/video/BV1514y1U7Uw/?vd_source=07bc57c14ff07a0d104533f8de5fb6d3)
 
 ![image](https://github.com/niemingxing/zhipin/assets/7400829/e7e4d622-2fab-4f25-a436-bf6ccc992357)
 
