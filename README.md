@@ -2,7 +2,7 @@
 
 ## 辅助Boss直聘招聘人员及时回复，提高用户应答效率，引导私域沉淀。
 
-免费密钥：加V获取30天免费密钥
+获取密钥：加V获取密钥
 
 示例图片|[安装参考](https://www.bilibili.com/video/BV1514y1U7Uw/?vd_source=07bc57c14ff07a0d104533f8de5fb6d3)
 
