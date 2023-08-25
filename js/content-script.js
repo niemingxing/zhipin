@@ -1,5 +1,6 @@
 ﻿let currentDomain = window.location.hostname;
 let autoReplyText = '';
+let chatOpt = '';
 let isAutoReply = false;
 let autoReplyCount = 0;
 /**
@@ -170,24 +171,35 @@ function handleAutoReply(itemIndex,listItems,cancel = false)
 				updateAutoReplyCount();
 				setTimeout(function (){
 					// 使用正则表达式匹配包含"换微信"文字的DOM元素
-					const searchTextRegex = /换微信/i; // i 表示不区分大小写
-					const optBtns = Array.from(document.querySelectorAll("div.chat-container span.operate-btn")).filter((element) => {
-						return searchTextRegex.test(element.innerText);
-					});
-					if(optBtns.length > 0)
+					//const searchTextRegex = /换微信/i; // i 表示不区分大小写
+					if(chatOpt!="")
 					{
-						optBtns[0].click();
-						console.log(optBtns[0].innerText);
-						let optParent = optBtns[0].parentElement;
-						//交换微信
-						setTimeout(function (){
-							let okBtn = optParent.querySelector("div.exchange-tooltip span.boss-btn-primary");
-							if(okBtn) okBtn.click();
+						const searchTextRegex = new RegExp(chatOpt, "i");
+						const optBtns = Array.from(document.querySelectorAll("div.chat-container span.operate-btn")).filter((element) => {
+							return searchTextRegex.test(element.innerText);
+						});
+						if(optBtns.length > 0)
+						{
+							optBtns[0].click();
+							console.log(optBtns[0].innerText);
+							let optParent = optBtns[0].parentElement;
+							//交换微信
 							setTimeout(function (){
-								handleAutoReply(itemIndex + 1,listItems,cancel);
-							},2000);
-						},300);
+								let okBtn = optParent.querySelector("div.exchange-tooltip span.boss-btn-primary");
+								if(okBtn) okBtn.click();
+								setTimeout(function (){
+									handleAutoReply(itemIndex + 1,listItems,cancel);
+								},2000);
+							},300);
+						}
 					}
+					else
+					{
+						setTimeout(function (){
+							handleAutoReply(itemIndex + 1,listItems,cancel);
+						},2000);
+					}
+
 				},3000);
 			},100);
 		}
@@ -213,6 +225,7 @@ function initSetting(callback)
 	// 获取存储的值
 	chrome.storage.local.get('nmx_boss_setting', function (data) {
 		autoReplyText = (data.hasOwnProperty("nmx_boss_setting") && data.nmx_boss_setting.hasOwnProperty("autoReply")) ? data.nmx_boss_setting.autoReply : '';
+		chatOpt = (data.hasOwnProperty("nmx_boss_setting") && data.nmx_boss_setting.hasOwnProperty("chatOpt")) ? data.nmx_boss_setting.chatOpt : '';;
 		// 在这里使用存储的值
 		console.log(autoReplyText);
 		if(callback) callback();
