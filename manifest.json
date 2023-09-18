@@ -23,6 +23,7 @@
 	"host_permissions": [
 		"https://zhipin.com/*",
 		"https://www.zhipin.com/*",
+		"https://api.kaipm.com/*",
 		"https://idnsl.xyz/*"
 	],
 	"content_scripts": 
