@@ -22,25 +22,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 
-    document.getElementById("open_reply").addEventListener("click", function() {
-        submitButton = this;
-        submitButton.disabled = true;
-        let action = '';
-        if(submitButton.innerText == "开启自动回复")
-        {
-            submitButton.innerText = "关闭自动回复";
-            action = 'open_auto_reply';
-        }
-        else if(submitButton.innerText == "关闭自动回复")
-        {
-            submitButton.innerText = "开启自动回复";
-            action = 'close_auto_reply';
-        }
-        checkMKey(function (){
-            sendCollectMessage(action);
-        });
-    });
-
     // 获取弹窗元素
     const popup = document.getElementById('popup');
 
@@ -85,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
             submitButton.disabled = false;
             return;
         }
-        fetch('https://idnsl.xyz/code/check_mkey',{
+        fetch('https://api.kaipm.com/code/check_mkey',{
             method: 'POST',
             headers: {
                 'Accept': 'application/json, */*',
