@@ -178,6 +178,7 @@ function handleAutoReply(itemIndex,listItems,cancel = false)
 						const optBtns = Array.from(document.querySelectorAll("div.chat-container span.operate-btn")).filter((element) => {
 							return searchTextRegex.test(element.innerText);
 						});
+						console.log(chatOpt);
 						if(optBtns.length > 0)
 						{
 							optBtns[0].click();
