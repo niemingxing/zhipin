@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var mKeyInput = document.getElementById('mKey');
     var autoReplyInput = document.getElementById('autoReply');
     var chatOpt = document.getElementById('chatOpt');
+    var keywords = document.getElementById('keywords');
     var saveButton = document.getElementById('saveButton');
 
     // 获取保存的密钥值并设置输入框的默认值
@@ -12,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
             mKeyInput.value = setting.mkey;
             autoReplyInput.value = setting.autoReply;
             chatOpt.value = setting.chatOpt;
+            keywords.value = setting.keywords || "";
             console.log(setting);
         }
     });
@@ -21,7 +23,8 @@ document.addEventListener('DOMContentLoaded', function() {
         let setting = {
             'mkey':  mKeyInput.value,
             'autoReply': autoReplyInput.value,
-            'chatOpt':chatOpt.value
+            'chatOpt':chatOpt.value,
+            'keywords':keywords.value
         };
         chrome.storage.local.set({ 'nmx_boss_setting': setting }, function() {
             alert('设置已保存');

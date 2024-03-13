@@ -1,6 +1,7 @@
 ﻿let currentDomain = window.location.hostname;
 let autoReplyText = '';
 let chatOpt = '';
+let markKeywords = '';
 let isAutoReply = false;
 let autoReplyCount = 0;
 /**
@@ -211,6 +212,63 @@ function handleAutoReply(itemIndex,listItems,cancel = false)
 	},3000);
 }
 
+/**
+ * 标记目标对象
+ */
+function markTargetObject(){
+	// 获取 class 为 "card-list" 的 ul 元素
+	// 假设 iframe 的 id 是 "myIframe"
+	var currentPageURL = window.location.href;
+	if(currentPageURL.includes("recommend"))
+	{
+		markRecommendTarget();
+	}
+}
+
+function markRecommendTarget(){
+	var iframe = document.querySelector('iframe[name=recommendFrame]');
+	var keywords = markKeywords.split(",");
+	console.log(keywords);
+	//console.log(iframe);
+	// 检查 iframe 是否加载完成
+	if (iframe.contentWindow && iframe.contentWindow.document) {
+		// 获取 iframe 的 document 对象
+		var iframeDoc = iframe.contentWindow.document;
+
+		var ulElement = iframeDoc.querySelector('ul.card-list');
+
+		if (ulElement) {
+			// 获取该 ul 元素下的所有 class 为 "card-item" 的 li 元素
+			var liElements = ulElement.querySelectorAll('li.card-item');
+
+			// 遍历每个 li 元素
+			liElements.forEach(function (liElement) {
+
+				// 获取 li 元素的文本内容（这里可能需要处理文本节点的子元素）
+				var liText = liElement.textContent || liElement.innerText;
+				//console.log(liText);
+				// 检查 li 文本是否包含关键词数组中的任何一个关键词
+				if (markKeywords !="" && keywords.some(function(keyword) {
+					return liText.includes(keyword);
+				})){
+					// 在每个 li 元素中查找 class 为 "candidate-card-wrap" 的 div 元素
+					var divElement = liElement.querySelector('div.candidate-card-wrap');
+
+					if (divElement) {
+						// 如果找到了该 div 元素，则修改其背景颜色
+						divElement.style.backgroundColor = '#8deceb'; // 假设我们要将其设置为红色
+					} else {
+						console.log('在 li 中未找到 class 为 "candidate-card-wrap" 的 div 元素');
+					}
+				}
+
+			});
+		} else {
+			console.log('没有找到 class 为 "card-list" 的 ul 元素');
+		}
+	}
+}
+
 function checkHasReply(messageItems)
 {
 	for (let i=0;i<messageItems.length;i++)
@@ -226,7 +284,8 @@ function initSetting(callback)
 	// 获取存储的值
 	chrome.storage.local.get('nmx_boss_setting', function (data) {
 		autoReplyText = (data.hasOwnProperty("nmx_boss_setting") && data.nmx_boss_setting.hasOwnProperty("autoReply")) ? data.nmx_boss_setting.autoReply : '';
-		chatOpt = (data.hasOwnProperty("nmx_boss_setting") && data.nmx_boss_setting.hasOwnProperty("chatOpt")) ? data.nmx_boss_setting.chatOpt : '';;
+		chatOpt = (data.hasOwnProperty("nmx_boss_setting") && data.nmx_boss_setting.hasOwnProperty("chatOpt")) ? data.nmx_boss_setting.chatOpt : '';
+		markKeywords = (data.hasOwnProperty("nmx_boss_setting") && data.nmx_boss_setting.hasOwnProperty("keywords")) ? data.nmx_boss_setting.keywords : '';
 		// 在这里使用存储的值
 		console.log(autoReplyText);
 		if(callback) callback();
@@ -239,6 +298,9 @@ window.onload = function() {
 		initSetting(function (){
 			initPromptMessagePopup();
 			initToolButton();
+			setInterval(function (){
+				markTargetObject();
+			},3000);
 			addStylesheet("css/page_layer.css");
 		});
 	}
