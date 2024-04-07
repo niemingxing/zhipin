@@ -223,6 +223,22 @@ function markTargetObject(){
 	{
 		markRecommendTarget();
 	}
+	else if(currentPageURL.includes("search"))
+	{
+		markSearchTarget();
+	}
+	else if(currentPageURL.includes("interaction"))
+	{
+		markInteractionTarget();
+	}
+	else if(currentPageURL.includes("geek/manage"))
+	{
+		markGeekManageTarget();
+	}
+	else if(currentPageURL.includes("chat/index"))
+	{
+		markChatTarget();
+	}
 }
 
 function markRecommendTarget(){
@@ -235,12 +251,10 @@ function markRecommendTarget(){
 		// 获取 iframe 的 document 对象
 		var iframeDoc = iframe.contentWindow.document;
 
-		var ulElement = iframeDoc.querySelector('ul.card-list');
-
+		var ulElement = iframeDoc.querySelector('ul.card-list') ? iframeDoc.querySelector('ul.card-list') : iframeDoc.querySelector('ul.recommend-card-list');
 		if (ulElement) {
 			// 获取该 ul 元素下的所有 class 为 "card-item" 的 li 元素
-			var liElements = ulElement.querySelectorAll('li.card-item');
-
+			var liElements = ulElement.querySelectorAll('li');
 			// 遍历每个 li 元素
 			liElements.forEach(function (liElement) {
 
@@ -253,7 +267,7 @@ function markRecommendTarget(){
 				})){
 					// 在每个 li 元素中查找 class 为 "candidate-card-wrap" 的 div 元素
 					var divElement = liElement.querySelector('div.candidate-card-wrap');
-
+					console.log(liText);
 					if (divElement) {
 						// 如果找到了该 div 元素，则修改其背景颜色
 						divElement.style.backgroundColor = '#8deceb'; // 假设我们要将其设置为红色
@@ -261,12 +275,149 @@ function markRecommendTarget(){
 						console.log('在 li 中未找到 class 为 "candidate-card-wrap" 的 div 元素');
 					}
 				}
-
 			});
 		} else {
 			console.log('没有找到 class 为 "card-list" 的 ul 元素');
 		}
 	}
+}
+
+function markSearchTarget(){
+	var iframe = document.querySelector('iframe[name=searchFrame]');
+	var keywords = markKeywords.split(",");
+	console.log(keywords);
+	//console.log(iframe);
+	// 检查 iframe 是否加载完成
+	if (iframe.contentWindow && iframe.contentWindow.document) {
+		// 获取 iframe 的 document 对象
+		var iframeDoc = iframe.contentWindow.document;
+
+		var ulElement = iframeDoc.querySelector('div.card-list');
+		if (ulElement) {
+			// 获取该 ul 元素下的所有 class 为 "card-item" 的 li 元素
+			var liElements = ulElement.querySelectorAll('li');
+			// 遍历每个 li 元素
+			liElements.forEach(function (liElement) {
+
+				// 获取 li 元素的文本内容（这里可能需要处理文本节点的子元素）
+				var liText = liElement.textContent || liElement.innerText;
+				//console.log(liText);
+				// 检查 li 文本是否包含关键词数组中的任何一个关键词
+				if (markKeywords !="" && keywords.some(function(keyword) {
+					return liText.includes(keyword);
+				})){
+					// 在每个 li 元素中查找 class 为 "candidate-card-wrap" 的 div 元素
+					var divElement = liElement.querySelector('a');
+					console.log(liText);
+					if (divElement) {
+						// 如果找到了该 div 元素，则修改其背景颜色
+						divElement.style.backgroundColor = '#8deceb'; // 假设我们要将其设置为红色
+					} else {
+						console.log('在 li 中未找到 class 为 "candidate-card-wrap" 的 div 元素');
+					}
+				}
+			});
+		} else {
+			console.log('没有找到 class 为 "card-list" 的 ul 元素');
+		}
+	}
+}
+
+function markInteractionTarget(){
+	var iframe = document.querySelector('iframe[name=interactionFrame]');
+	var keywords = markKeywords.split(",");
+	console.log(keywords);
+	//console.log(iframe);
+	// 检查 iframe 是否加载完成
+	if (iframe.contentWindow && iframe.contentWindow.document) {
+		// 获取 iframe 的 document 对象
+		var iframeDoc = iframe.contentWindow.document;
+
+		var ulElement = iframeDoc.querySelector('ul.card-list');
+		if (ulElement) {
+			// 获取该 ul 元素下的所有 class 为 "card-item" 的 li 元素
+			var liElements = ulElement.querySelectorAll('li');
+			// 遍历每个 li 元素
+			liElements.forEach(function (liElement) {
+
+				// 获取 li 元素的文本内容（这里可能需要处理文本节点的子元素）
+				var liText = liElement.textContent || liElement.innerText;
+				//console.log(liText);
+				// 检查 li 文本是否包含关键词数组中的任何一个关键词
+				if (markKeywords !="" && keywords.some(function(keyword) {
+					return liText.includes(keyword);
+				})){
+					// 在每个 li 元素中查找 class 为 "candidate-card-wrap" 的 div 元素
+					var divElement = liElement.querySelector('div.candidate-card-wrap');
+					console.log(liText);
+					if (divElement) {
+						// 如果找到了该 div 元素，则修改其背景颜色
+						divElement.style.backgroundColor = '#8deceb'; // 假设我们要将其设置为红色
+					} else {
+						console.log('在 li 中未找到 class 为 "candidate-card-wrap" 的 div 元素');
+					}
+				}
+			});
+		} else {
+			console.log('没有找到 class 为 "card-list" 的 ul 元素');
+		}
+	}
+}
+
+function markGeekManageTarget(){
+	var iframe = document.querySelector('iframe[name=geekManageFrame]');
+	var keywords = markKeywords.split(",");
+	console.log(keywords);
+	//console.log(iframe);
+	// 检查 iframe 是否加载完成
+	if (iframe.contentWindow && iframe.contentWindow.document) {
+		// 获取 iframe 的 document 对象
+		var iframeDoc = iframe.contentWindow.document;
+
+		var ulElement = iframeDoc.querySelector('tbody.ui-tablepro-tbody');
+		if (ulElement) {
+			// 获取该 ul 元素下的所有 class 为 "card-item" 的 li 元素
+			var liElements = ulElement.querySelectorAll('tr');
+			// 遍历每个 li 元素
+			liElements.forEach(function (liElement) {
+
+				// 获取 li 元素的文本内容（这里可能需要处理文本节点的子元素）
+				var liText = liElement.textContent || liElement.innerText;
+				//console.log(liText);
+				// 检查 li 文本是否包含关键词数组中的任何一个关键词
+				if (markKeywords !="" && keywords.some(function(keyword) {
+					return liText.includes(keyword);
+				})){
+					// 在每个 li 元素中查找 class 为 "candidate-card-wrap" 的 div 元素
+					var divElements = liElement.querySelectorAll('td');
+					console.log(liText);
+					divElements.forEach(function (divElement) {
+						divElement.style.backgroundColor = '#8deceb';
+					});
+
+				}
+			});
+		} else {
+			console.log('没有找到 class 为 "card-list" 的 ul 元素');
+		}
+	}
+}
+
+function markChatTarget(){
+	var topElement = document.querySelector('div.base-info-single-top');
+	var mainElement = document.querySelector('div.base-info-single-main');
+	if(mainElement)
+	{
+		var keywords = markKeywords.split(",");
+		var text = mainElement.textContent || mainElement.innerText;
+		if (markKeywords !="" && keywords.some(function(keyword) {
+			return text.includes(keyword);
+		})){
+			topElement.style.backgroundColor = '#8deceb';
+			mainElement.style.backgroundColor = '#8deceb';
+		}
+	}
+
 }
 
 function checkHasReply(messageItems)
