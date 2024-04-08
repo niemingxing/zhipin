@@ -415,6 +415,9 @@ function markChatTarget(){
 		})){
 			topElement.style.backgroundColor = '#8deceb';
 			mainElement.style.backgroundColor = '#8deceb';
+		}else{
+			topElement.style.backgroundColor = '';
+			mainElement.style.backgroundColor = '';
 		}
 	}
 
@@ -451,7 +454,7 @@ window.onload = function() {
 			initToolButton();
 			setInterval(function (){
 				markTargetObject();
-			},3000);
+			},1000);
 			addStylesheet("css/page_layer.css");
 		});
 	}
