@@ -4,6 +4,37 @@ let chatOpt = '';
 let markKeywords = '';
 let isAutoReply = false;
 let autoReplyCount = 0;
+
+const head = document.head;
+const proxyScript = createScript(chrome.runtime.getURL("js/inject.js"))
+
+if(head.firstChild) {
+	// proxyScript 要保证在第一个插入
+	head.insertBefore(proxyScript, head.firstChild);
+} else {
+	head.appendChild(proxyScript);
+}
+
+function createScript(src) {
+    const script = document.createElement('script');
+    script.setAttribute('src', src);
+    return script;
+}
+
+
+window.addEventListener('ajaxGetData', function(e) {
+	const data = e?.detail;
+	if(!data) return;
+	const responseURL = data?.responseURL;
+	// boss 直聘接口
+	if(responseURL){
+		if(responseURL.indexOf('/search/joblist.json') !== -1) {
+			console.log(data?.response);
+		}
+	}
+})
+
+
 /**
  * 初始化弹层
  */

@@ -39,7 +39,7 @@
 	"web_accessible_resources":
 	[
 		{
-			"resources" : ["css/page_layer.css"],
+			"resources" : ["css/page_layer.css","js/inject.js"],
 			"matches": [
 				"*://www.zhipin.com/*",
 				"*://zhipin.com/*"
