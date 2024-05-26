@@ -146,7 +146,7 @@ function startAutoReply()
 	let listItems = document.querySelectorAll("div.chat-container div.chat-user div[role=group] div[role=listitem]");
 	let noRelyItems = Array.from(listItems).filter((node) => {
 		let figureElement = node.querySelector("div.figure");
-		let newCountElement = figureElement.querySelector("span.news-count");
+		let newCountElement = figureElement.querySelector("span.badge-count");
 		let newCount = 0;
 		if(newCountElement)
 		{
@@ -183,7 +183,7 @@ function handleAutoReply(itemIndex,listItems,cancel = false)
 
 	// 操作每个节点的代码
 	let figureElement = node.querySelector("div.figure");
-	let newCountElement = figureElement.querySelector("span.news-count")
+	let newCountElement = figureElement.querySelector("span.badge-count")
 	let titleElement = node.querySelector("div.text.uid");
 	let newCount = 0;
 	if(newCountElement)
